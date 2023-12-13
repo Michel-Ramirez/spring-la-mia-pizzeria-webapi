@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,7 @@ public class PizzaRestController {
 	@Autowired
 	PizzaService pizzaService;
 
+	// INVIA UN JSON CON TUTTE LE PIZZE E LE SUE RELAZIONI ALLA INDEX
 	@GetMapping
 	public ResponseEntity<List<Pizza>> getIndex() {
 
@@ -27,4 +29,19 @@ public class PizzaRestController {
 
 		return new ResponseEntity<>(pizzas, HttpStatus.OK);
 	}
+
+	// DETTAGLIO DELLA PIZZA, LA ROTTA E' FORNITA DA REQUESTMAPPIN INIZIALE, NEL GET
+	// MAPPING SPECIFICO SOLO IL PARAMETRO, IN QUESTO CASO ID
+	@GetMapping("{id}")
+	public ResponseEntity<Pizza> getPizza(@PathVariable int id) {
+
+		Pizza pizza = pizzaService.findById(20);
+
+		if (pizza == null)
+			return new ResponseEntity<>(pizza, HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(pizza, HttpStatus.OK);
+
+	}
+
 }
