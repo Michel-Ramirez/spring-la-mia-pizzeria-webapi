@@ -37,7 +37,7 @@ public class OffertController {
 	public String createOffert(Model model, @Valid @ModelAttribute Offert offert, @PathVariable int id,
 			BindingResult bindingResult) {
 
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findById(id).get();
 
 		return saveOffert(model, offert, pizza, bindingResult);
 
@@ -62,7 +62,7 @@ public class OffertController {
 			return "offert-form";
 		}
 
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findById(id).get();
 
 		// SALVARE LA MODIFICA PASSANDOGLI LA PIZZA
 

@@ -68,7 +68,7 @@ public class PizzaController {
 
 		// RECUPERO DAL DB LA PIZZA CERCADOLA CON IL ID PASSATO TRAMITE PARAMETRO AL
 		// METODO
-		Pizza p = pizzaService.findById(id);
+		Pizza p = pizzaService.findById(id).get();
 
 		List<Offert> offerts = p.getOffert();
 		List<Ingredient> ingList = p.getIngredients();
@@ -105,7 +105,7 @@ public class PizzaController {
 	@GetMapping("/pizza/edit/{id}")
 	public String editPizza(Model model, @PathVariable int id) {
 
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findById(id).get();
 
 		model.addAttribute("ingredients", getIngredients(model));
 
@@ -127,7 +127,7 @@ public class PizzaController {
 	@PostMapping("/pizza/delete/{id}")
 	public String delete(Model model, @PathVariable int id, RedirectAttributes redirectAtr) {
 
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findById(id).get();
 
 		pizzaService.delete(pizza);
 

@@ -1,6 +1,7 @@
 package org.java.db.serv;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.java.db.pojo.Ingredient;
 import org.java.db.pojo.Pizza;
@@ -22,8 +23,8 @@ public class PizzaService {
 		return pizzaRepository.findAll();
 	}
 
-	public Pizza findById(int id) {
-		return pizzaRepository.findById(id).get();
+	public Optional<Pizza> findById(int id) {
+		return pizzaRepository.findById(id);
 	}
 
 	public List<Pizza> findByPizzaNameOrIngredient(String value) {

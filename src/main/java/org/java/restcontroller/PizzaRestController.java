@@ -1,8 +1,13 @@
 package org.java.restcontroller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.java.db.pojo.Ingredient;
+import org.java.db.pojo.Offert;
 import org.java.db.pojo.Pizza;
+import org.java.db.serv.IngredientService;
+import org.java.db.serv.OffertService;
 import org.java.db.serv.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +28,12 @@ public class PizzaRestController {
 	@Autowired
 	PizzaService pizzaService;
 
+	@Autowired
+	OffertService offertService;
+
+	@Autowired
+	IngredientService ingredientService;
+
 	// INVIA UN JSON CON TUTTE LE PIZZE E LE SUE RELAZIONI ALLA INDEX
 	@GetMapping
 	public ResponseEntity<List<Pizza>> getIndex() {
@@ -37,7 +48,7 @@ public class PizzaRestController {
 	@GetMapping("{id}")
 	public ResponseEntity<Pizza> getPizza(@PathVariable int id) {
 
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findById(id).get();
 
 		if (pizza == null)
 			return new ResponseEntity<>(pizza, HttpStatus.NOT_FOUND);
@@ -46,12 +57,111 @@ public class PizzaRestController {
 
 	}
 
+	// API CREAZIONE DELLA PIZZA
 	@PostMapping
-	public ResponseEntity<Pizza> create(@RequestBody Pizza pizza) {
+	public ResponseEntity<Pizza> createPizza(@RequestBody Pizza pizza) {
 
-		pizzaService.save(pizza);
+		try {
+			pizzaService.save(pizza);
+			return new ResponseEntity<>(pizza, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(pizza, HttpStatus.BAD_REQUEST);
+		}
+	}
 
-		return new ResponseEntity<>(pizza, HttpStatus.OK);
+	// MODIFICA DELLE PIZZA
+	@PostMapping("pizza/edit/{id}")
+	public ResponseEntity<Pizza> editPizza(@PathVariable int id, @RequestBody Pizza newPizza) {
+
+		Pizza pizza = pizzaService.findById(id).get();
+
+		try {
+			pizza.setName(newPizza.getName());
+			pizza.setDescription(newPizza.getDescription());
+			pizza.setPrice(newPizza.getPrice());
+			pizza.setIngredients(newPizza.getIngredients());
+
+			pizzaService.save(pizza);
+			return new ResponseEntity<>(pizza, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(pizza, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	// ELIMINAZIONE DI UNA PIZZA
+	@PostMapping("/pizza/delete/{id}")
+	public ResponseEntity<Pizza> deletePizza(@PathVariable int id) {
+
+		Optional<Pizza> pizzaOpt = pizzaService.findById(id);
+
+		if (pizzaOpt.isEmpty())
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+		Pizza pizza = pizzaOpt.get();
+
+		pizzaService.delete(pizza);
+		return new ResponseEntity<>(HttpStatus.OK);
+
+	}
+
+	// API CREAZIONE DELL'OFFERTA (ID = ID DELLA PIZZA ALLA QUALE ASSOCIARE
+	// L'OFFERTA)
+	@PostMapping("/offert/create/{id}")
+	public ResponseEntity<Offert> createOffert(@RequestBody Offert offert, @PathVariable int id) {
+
+		Pizza pizza = pizzaService.findById(id).get();
+
+		try {
+			Offert of = new Offert(offert.getTitle(), offert.getStartDateOffert(), offert.getEndDateOffert(), pizza);
+			offertService.save(of);
+			return new ResponseEntity<>(of, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(offert, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PostMapping("/offert/delete/{id}")
+	public ResponseEntity<Offert> deleteOffert(@PathVariable int id) {
+
+		Offert of = offertService.findById(id);
+
+		if (of == null)
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+		offertService.delete(of);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	// CREAZIONE DI INGREDIENTI
+	@PostMapping("/ingredient/create")
+	public ResponseEntity<Ingredient> createIngredient(@RequestBody Ingredient ingredient) {
+
+		ingredientService.save(ingredient);
+		return new ResponseEntity<>(ingredient, HttpStatus.OK);
+
+	}
+
+	// ELIMINAZIONE INGREDIENTI
+	@PostMapping("/ingredient/delete/{id}")
+	public ResponseEntity<Ingredient> deleteIngresient(@PathVariable int id) {
+
+		Ingredient ing = ingredientService.findById(id);
+
+		if (ing == null)
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+		List<Pizza> pizzas = ing.getPizzas();
+
+		if (pizzas.size() > 0) {
+			for (Pizza pizza : pizzas) {
+
+				pizza.getIngredients().remove(ing);
+			}
+		}
+
+		ingredientService.delete(ing);
+		return new ResponseEntity<>(HttpStatus.OK);
+
 	}
 
 }
