@@ -1,20 +1,14 @@
-# spring-la-mia-pizzeria-security
+# spring-la-mia-pizzeria-webapi
 
 ## Todo
-### Day 1
-> [!attention] IMPORTANTE
-> Ricordatevi di sganciare la vostra vecchia repository e di crearne una nuova per questo esercizio, che prosegue il lavoro della pizzeria, dove lo avevate lasciato
 
-Abbiamo sviluppato tutte le pagine per gestire la nostra pizzeria (elenco pizze, dettagli singola pizza, creazione, modifica, cancellazione, offerte speciali, ingredienti)…
+Implementiamo quindi i metodi CRUD tramite `RestController`.
 
-ma vogliamo che chiunque possa effettuare queste operazioni?
-Sicuramente no!
+Diamo la possibilità di :
+- ottenere la lista di pizze (dobbiamo anche poterle filtrare per titolo)
+- leggere i dettagli di una singola pizza
+- creare una nuova pizza
+- modificare una pizza esistente
+- cancellare una pizza
 
-Quindi inseriamo l’autenticazione in modo che solo gli utenti registrati possano accedere a queste pagine.
-
-Creiamo le `entity` necessarie e popoliamo a mano i dati degli utenti nel database.
-
-Sono previsti due ruoli : `USER` e `ADMIN`
-
-Gli utenti con ruolo `USER` possono accedere solo alla **pagina index** e a **quella di dettaglio**.
-Gli utenti `ADMIN` possono **fare tutto**.
+Queste operazioni devono poter essere eseguite tramite **PostMan**, non preoccupiamoci quindi della parte di **front-end** per ora.
