@@ -1,11 +1,12 @@
 package org.java.db.pojo;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,9 +37,8 @@ public class Pizza {
 	@URL
 	private String photo;
 
-	@Column(precision = 4, scale = 2)
 	@Positive(message = "Invalid price")
-	private BigDecimal price;
+	private float price;
 
 	// RELAZIONE CON OFFERTA
 
@@ -68,6 +68,7 @@ public class Pizza {
 
 	// METODO CHE RICEVE UNA LISTA DI INFREDIENTI TRAMITE LO SPRED OPERATOR E LO
 	// STRASFORMA IN UN ARRAY
+	@JsonIgnore
 	public void setIngredients(Ingredient... ingredients) {
 		setIngredients(Arrays.asList(ingredients));
 	}
@@ -77,7 +78,7 @@ public class Pizza {
 
 	// AGGIUNGO AL COSTRUTTORE LA POSSIBILITA' DI RICEVERE UNA LISTA DI INFREDIENTI
 	// CON LO SPRED OPERATOR
-	public Pizza(String name, String description, String photo, BigDecimal price, Ingredient... ingredients) {
+	public Pizza(String name, String description, String photo, float price, Ingredient... ingredients) {
 
 		setName(name);
 		setDescription(description);
@@ -118,11 +119,11 @@ public class Pizza {
 		this.photo = photo;
 	}
 
-	public BigDecimal getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 

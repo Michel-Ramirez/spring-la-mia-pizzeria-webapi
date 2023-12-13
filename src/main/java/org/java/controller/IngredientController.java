@@ -5,7 +5,6 @@ import java.util.List;
 import org.java.db.pojo.Ingredient;
 import org.java.db.pojo.Pizza;
 import org.java.db.serv.IngredientService;
-import org.java.db.serv.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +19,6 @@ import jakarta.validation.Valid;
 
 @Controller
 public class IngredientController {
-
-	@Autowired
-	private PizzaService pizzaService;
 
 	@Autowired
 	private IngredientService ingredientService;

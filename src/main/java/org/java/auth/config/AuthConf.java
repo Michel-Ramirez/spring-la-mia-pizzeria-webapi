@@ -12,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class AuthConf {
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -21,7 +22,9 @@ public class AuthConf {
 //				.hasAuthority("ADMIN").requestMatchers("/pizza/delete/**").hasAuthority("ADMIN")
 //				.requestMatchers("/ingredient/**").hasAuthority("ADMIN")
 //				.requestMatchers("/offert/**").hasAuthority("ADMIN")
-				.requestMatchers("/**").permitAll().and().formLogin().and().logout();
+				.requestMatchers("/**").permitAll().requestMatchers("/pizza/**").permitAll()
+				.requestMatchers("/offert/**").permitAll().requestMatchers("/ingredient/**").permitAll()
+				.requestMatchers("/ingredients/**").permitAll().and().formLogin().and().logout();
 
 		return http.build();
 	}

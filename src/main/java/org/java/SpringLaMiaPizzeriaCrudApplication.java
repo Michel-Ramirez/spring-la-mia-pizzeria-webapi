@@ -1,7 +1,5 @@
 package org.java;
 
-import java.math.BigDecimal;
-
 import org.java.auth.config.AuthConf;
 import org.java.auth.db.Role;
 import org.java.auth.db.User;
@@ -81,34 +79,34 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		ingredientService.save(ingr20);
 
 		Pizza pizza1 = new Pizza("Capricciosa", "La pizza tutta capricciosa",
-				"https://picsum.photos/seed/picsum/700/500", new BigDecimal("11.50"), ingr1, ingr3, ingr4, ingr10);
+				"https://picsum.photos/seed/picsum/700/500", 11.50f, ingr1, ingr3, ingr4, ingr10);
 
 		Pizza pizza2 = new Pizza("Margherita", "Bona come la regina", "https://picsum.photos/seed/picsum/700/500",
-				new BigDecimal("9.99"));
+				9.99f);
 
 		Pizza pizza3 = new Pizza("Quattro Stagioni", "Ormai non ce son più",
-				"https://picsum.photos/seed/picsum/700/500", new BigDecimal("12.75"), ingr7, ingr8, ingr12, ingr15);
+				"https://picsum.photos/seed/picsum/700/500", 12.50f, ingr7, ingr8, ingr12, ingr15);
 
 		Pizza pizza4 = new Pizza("Diavola", "Quella che vorremmo tutti", "https://picsum.photos/seed/picsum/700/500",
-				new BigDecimal("10.25"), ingr19, ingr20, ingr4, ingr10);
+				10.50f, ingr19, ingr20, ingr4, ingr10);
 
-		Pizza pizza5 = new Pizza("Quattro Formaggi", "La puzzona", "https://picsum.photos/seed/picsum/700/500",
-				new BigDecimal("13.20"), ingr9, ingr8, ingr2, ingr3);
+		Pizza pizza5 = new Pizza("Quattro Formaggi", "La puzzona", "https://picsum.photos/seed/picsum/700/500", 13.20f,
+				ingr9, ingr8, ingr2, ingr3);
 
-		Pizza pizza6 = new Pizza("Napoletana", "Aho! gnamme belli", "https://picsum.photos/seed/picsum/700/500",
-				new BigDecimal("11.75"), ingr8, ingr3, ingr14, ingr17);
+		Pizza pizza6 = new Pizza("Napoletana", "Aho! gnamme belli", "https://picsum.photos/seed/picsum/700/500", 11.90f,
+				ingr8, ingr3, ingr14, ingr17);
 
 		Pizza pizza7 = new Pizza("Calzone", "Quello di Babbo Natale", "https://picsum.photos/seed/picsum/700/500",
-				new BigDecimal("10.99"), ingr17, ingr15, ingr14, ingr10);
+				10.99f, ingr17, ingr15, ingr14, ingr10);
 
 		Pizza pizza8 = new Pizza("Hawaiian", "Dove vorremmo essere tutti", "https://picsum.photos/seed/picsum/700/500",
-				new BigDecimal("10.50"), ingr16, ingr15, ingr14, ingr20);
+				10.99f, ingr16, ingr15, ingr14, ingr20);
 
-		Pizza pizza9 = new Pizza("Vegetariana", "Magnatela te!", "https://picsum.photos/seed/picsum/700/500",
-				new BigDecimal("11.00"), ingr16, ingr13, ingr14, ingr10);
+		Pizza pizza9 = new Pizza("Vegetariana", "Magnatela te!", "https://picsum.photos/seed/picsum/700/500", 11.00f,
+				ingr16, ingr13, ingr14, ingr10);
 
-		Pizza pizza10 = new Pizza("Bianca", "is White", "https://picsum.photos/seed/picsum/700/500",
-				new BigDecimal("9.75"), ingr2, ingr5, ingr9, ingr13);
+		Pizza pizza10 = new Pizza("Bianca", "is White", "https://picsum.photos/seed/picsum/700/500", 9.90f, ingr2,
+				ingr5, ingr9, ingr13);
 
 		pizzaService.save(pizza1);
 		pizzaService.save(pizza2);
