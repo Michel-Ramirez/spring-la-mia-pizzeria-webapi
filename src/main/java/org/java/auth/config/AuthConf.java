@@ -15,11 +15,13 @@ public class AuthConf {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeHttpRequests().requestMatchers("/home").hasAnyAuthority("USER", "ADMIN")
-				.requestMatchers("/pizza/create").hasAuthority("ADMIN").requestMatchers("/pizza/edit/**")
-				.hasAuthority("ADMIN").requestMatchers("/pizza/delete/**").hasAuthority("ADMIN")
-				.requestMatchers("/ingredient/**").hasAuthority("ADMIN").requestMatchers("/offert/**")
-				.hasAuthority("ADMIN").requestMatchers("/**").permitAll().and().formLogin().and().logout();
+		http.csrf().disable().cors().disable().authorizeHttpRequests()
+//		.requestMatchers("/home").hasAnyAuthority("USER", "ADMIN")
+//				.requestMatchers("/pizza/create").hasAuthority("ADMIN").requestMatchers("/pizza/edit/**")
+//				.hasAuthority("ADMIN").requestMatchers("/pizza/delete/**").hasAuthority("ADMIN")
+//				.requestMatchers("/ingredient/**").hasAuthority("ADMIN")
+//				.requestMatchers("/offert/**").hasAuthority("ADMIN")
+				.requestMatchers("/**").permitAll().and().formLogin().and().logout();
 
 		return http.build();
 	}
