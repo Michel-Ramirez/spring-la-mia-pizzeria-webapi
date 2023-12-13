@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    <title>Spring of pizza</title>
+    
+    <style>
+        body{
+            height: 100vh;
+            background: linear-gradient(0deg, rgba(58,58,59,1) 2%, rgba(9,8,8,1) 52%, rgba(112,112,112,1) 100%);
+
+            color:white;
+        }
+        main{
+            height: calc(100vh - 146px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <harder th:replace="fragments :: header"></harder>
+
+    <main class="container">
+        <h1>Welcome to SPRING OF PIZZA</h1>
+        <p>Please log in to access the catalogue</p>
+        
+        <a th:href="@{/home}" class="btn btn-primary mt-5">Login</a>
+        
+    </main>
+
+    <footer th:fragment="footer" class="d-flex justify-content-center">
+        <p><i class="fs-5">Created with love by Michel Ramirez </i></p>
+    </footer>
+</body>
+
+</html>

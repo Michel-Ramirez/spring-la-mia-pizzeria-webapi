@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+    <title>Detail Pizza</title>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
+</head>
+
+<body>
+    <harder th:replace="fragments :: header"></harder>
+
+    <main class="container" th:object="${pizza}">
+
+        <div sec:authorize="hasAuthority('ADMIN')" class="my-5 d-flex flex-column align-items-end">
+            <a th:replace="fragments :: button(@{/offert/{id}/create(id=*{id})}, 'Add special offert')"></a>
+        </div>
+
+        <div class="alert alert-success" th:if="${offerts.size() > 0}">
+            <h5>Pizza currently on offert with the following promotions</h5>
+
+            <ul>
+                <li th:each="offert : ${offerts}" th:object="${offert}" class="d-flex justify-content-between">
+                    <div>
+                    <span class="fw-bolder">[[*{title}]]</span> iniziata il <span
+                        class="fw-bolder">[[*{startDateOffert}]]</span> con scadenza il <span
+                        class="fw-bolder text-danger">[[*{endDateOffert}]]</span>                        
+                    </div>
+                    <div sec:authorize="hasAuthority('ADMIN')" class="d-flex">
+                        <a th:href="@{/offert/edit/{id}(id=${id})}" class="btn btn-sm btn-warning me-2 mb-3">edit</a>
+                       <form th:action="@{/offert/delete/{id}(id=*{id})}" method="POST">
+                            <button type="submit" class="btn btn-sm btn-danger">delete</button>
+                        </form>                   
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <h1 class="my-5 pt-5">[[*{name}]] <span class="fs-5 fw-bolder ms-5">€ [[${pizza.price}]]</span></h1>
+
+
+        <div class="row">
+            <div class="col-8">
+                <p>
+                    [[*{description}]]
+                </p>
+                <h4 class="my-3">Ingredients: </h4>
+                <p th:each="ingredient : ${ingredientsList}" th:object="${ingredient}" class="m-0">
+                    
+                    [[*{name}]]
+                </p>
+            </div>
+            <div class="col-4">
+                <img class="img-fluid" th:src="${pizza.photo}" alt="pizza-photo">
+            </div>
+        </div>
+        <div sec:authorize="hasAuthority('ADMIN')" class="mt-5">
+            <i class="fw-bolder">id: [[*{id}]]</i>
+        </div>
+    </main>
+    
+     <footer th:fragment="footer" class="d-flex justify-content-center mt-5 pt-5">
+        <p><i class="fs-5">Created with love by Michel Ramirez </i></p>
+    </footer>
+</body>
+
+</html>

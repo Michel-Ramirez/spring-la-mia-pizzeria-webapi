@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
+<title>Ingredients List</title>
+</head>
+<body>
+    
+    <harder th:replace="fragments :: header"></harder>
+    
+    <main class="container">
+        
+        <div class="alert alert-info mt-5" th:if="${ingredientDeleted != null}">
+            <p class="m-0">Ingredient <span class="fw-bolder">[[${ingredientDeleted.name}]]</span> correctly deleted</p>         
+        </div>
+        
+        <h1 class="my-5">Ingredients List</h1>
+        
+        <div class="d-flex justify-content-end mb-5">
+            <a th:replace="fragments :: button(@{/ingredient/create}, 'Add ingredient')"></a>
+        </div>
+        
+        <div th:if="${ingredientsList.size() == 0}" class="text-center fw-bolder fs-1 mt-5 p-t5"> Spiacente non ci sono pizze
+            :( </div>
+        
+        <table th:if="${ingredientsList.size() > 0}" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ingredient : ${ingredientsList}" th:object="${ingredient}">
+
+                    <th scope="row">[[*{id}]]</th>
+                    <td>[[*{name}]]</td>
+                    <td class="d-flex justify-content-end">
+                        <form th:action="@{/ingredients/delete/{id}(id=${ingredient.id})}" method="POST">
+                            <button type="submit" class="btn btn-sm btn-danger">delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    
+     <footer th:fragment="footer" class="d-flex justify-content-center mt-5 pt-5">
+        <p><i class="fs-5">Created with love by Michel Ramirez </i></p>
+    </footer>
+</body>
+</html>
