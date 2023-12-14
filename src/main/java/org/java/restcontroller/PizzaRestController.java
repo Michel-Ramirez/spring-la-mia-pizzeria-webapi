@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -36,9 +39,9 @@ public class PizzaRestController {
 
 	// INVIA UN JSON CON TUTTE LE PIZZE E LE SUE RELAZIONI ALLA INDEX
 	@GetMapping
-	public ResponseEntity<List<Pizza>> getIndex() {
+	public ResponseEntity<List<Pizza>> getIndex(@RequestParam(required = false) String query) {
 
-		List<Pizza> pizzas = pizzaService.findAll();
+		List<Pizza> pizzas = query == null ? pizzaService.findAll() : pizzaService.findByPizzaNameOrIngredient(query);
 
 		return new ResponseEntity<>(pizzas, HttpStatus.OK);
 	}
@@ -70,7 +73,7 @@ public class PizzaRestController {
 	}
 
 	// MODIFICA DELLE PIZZA
-	@PostMapping("pizza/edit/{id}")
+	@PutMapping("pizza/edit/{id}")
 	public ResponseEntity<Pizza> editPizza(@PathVariable int id, @RequestBody Pizza newPizza) {
 
 		Pizza pizza = pizzaService.findById(id).get();
@@ -89,7 +92,7 @@ public class PizzaRestController {
 	}
 
 	// ELIMINAZIONE DI UNA PIZZA
-	@PostMapping("/pizza/delete/{id}")
+	@DeleteMapping("/pizza/delete/{id}")
 	public ResponseEntity<Pizza> deletePizza(@PathVariable int id) {
 
 		Optional<Pizza> pizzaOpt = pizzaService.findById(id);
@@ -120,7 +123,7 @@ public class PizzaRestController {
 		}
 	}
 
-	@PostMapping("/offert/delete/{id}")
+	@DeleteMapping("/offert/delete/{id}")
 	public ResponseEntity<Offert> deleteOffert(@PathVariable int id) {
 
 		Offert of = offertService.findById(id);
@@ -142,7 +145,7 @@ public class PizzaRestController {
 	}
 
 	// ELIMINAZIONE INGREDIENTI
-	@PostMapping("/ingredient/delete/{id}")
+	@DeleteMapping("/ingredient/delete/{id}")
 	public ResponseEntity<Ingredient> deleteIngresient(@PathVariable int id) {
 
 		Ingredient ing = ingredientService.findById(id);
