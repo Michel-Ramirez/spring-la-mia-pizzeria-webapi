@@ -23,7 +23,7 @@
         <h1 class="text-center my-5">Create an new offert</h1>
 
         <form class="d-flex justify-content-center" th:object="${ingredient}" method="POST">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            
             <div class="wrapper">
                 <div class="mb-3">
                     <label for="ingr-name" class="form-label">Ingredient name</label>
