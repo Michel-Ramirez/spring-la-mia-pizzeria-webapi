@@ -61,7 +61,7 @@ public class PizzaRestController {
 	}
 
 	// API CREAZIONE DELLA PIZZA
-	@PostMapping
+	@PostMapping("pizza/create")
 	public ResponseEntity<Pizza> createPizza(@RequestBody Pizza pizza) {
 
 		try {
