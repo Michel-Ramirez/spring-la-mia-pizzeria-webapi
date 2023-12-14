@@ -41,7 +41,7 @@ public class PizzaRestController {
 	@GetMapping
 	public ResponseEntity<List<Pizza>> getIndex(@RequestParam(required = false) String query) {
 
-		List<Pizza> pizzas = query == null ? pizzaService.findAll() : pizzaService.findByPizzaNameOrIngredient(query);
+		List<Pizza> pizzas = query != null ? pizzaService.findByPizzaNameOrIngredient(query) : pizzaService.findAll();
 
 		return new ResponseEntity<>(pizzas, HttpStatus.OK);
 	}
