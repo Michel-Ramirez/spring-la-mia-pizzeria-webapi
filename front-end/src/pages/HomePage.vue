@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, popScopeId, ref } from 'vue';
 import axios from 'axios';
+// INIZIALIZZO L'ARRAY DI OGGETTI CON REF(REF CRA UN OGGETTO CON DELLE KEY DI DEFAUL, TRA QUESTE .VALUE DOVE ANDRANNO INSERITI GLI OGGETTI IN INGRESSO)
 
 const pizzas = ref(null);
 const termSerched = ref("");
@@ -8,6 +9,8 @@ const getPizzas = async () => {
 
     if (termSerched.value !== "") {
         const data = await axios.get(`http://127.0.0.1:8080/api/v1.0/pizzas?query=${termSerched.value}`);
+
+        //PER SALVARE I DATI NELL'OGGETTO REF SI USA .VALUE
         pizzas.value = data.data;
     } else {
         const data = await axios.get(`http://127.0.0.1:8080/api/v1.0/pizzas`);
@@ -17,6 +20,8 @@ const getPizzas = async () => {
 
 const deletePizza = async (id) => {
     const data = await axios.delete(`http://127.0.0.1:8080/api/v1.0/pizzas/pizza/delete/${id}`)
+
+    //UTILIZZARE AWAIT ALTRIMENTI IL METODO NON VERRA' CHIAMATO PER VIA DELL'ASSINCRONICITA' DELLA CHIAMATA
     await getPizzas();
 }
 

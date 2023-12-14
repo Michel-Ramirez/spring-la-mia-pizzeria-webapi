@@ -11,7 +11,6 @@ const newPizza = ref({
 })
 const sendData = async () => {
     const data = await axios.post('http://127.0.0.1:8080/api/v1.0/pizzas/pizza/create', newPizza.value)
-    this.$router.push('/');
 }
 </script>
 

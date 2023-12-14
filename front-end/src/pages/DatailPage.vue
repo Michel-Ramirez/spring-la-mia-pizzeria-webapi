@@ -1,25 +1,25 @@
-<script>
+<script setup>
 import axios from 'axios';
-export default {
-    data() {
-        return {
-            pizza: []
-        }
-    },
-    methods: {
-        fetchData() {
-            const pizzaId = this.$route.params.id
-            axios.get(`http://127.0.0.1:8080/api/v1.0/pizzas/${pizzaId}`).then(res => {
-                this.pizza = res.data
-            })
-        }
-    },
-    mounted() {
-        this.fetchData()
-    }
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router';
+
+//INIZIALIZZO L'OGGETTO VUOTO (NON A NULL ALTRIMENTI AL CARICAMENTO QUANDO NON CI SONO ANCORA I DATI IL HTML SI ROMPER PERCHE' NON TROVA pizza.name)
+const pizza = ref("");
+
+//RICHIAMO L'OGGETTO CON I DATI DELLA ROUTE
+const route = useRoute();
+
+const fetchData = async () => {
+
+    //ESTRAGGO DALL'OGGETTO ROUTE IL ID PER POI PASSARLO ALLA CHIAMATA AXIOS
+    const pizzaId = route.params.id
+
+    const data = await axios.get(`http://127.0.0.1:8080/api/v1.0/pizzas/${pizzaId}`);
+    pizza.value = data.data;
 }
 
-
+//AL MOUNT CHIAMO LA FUNZIONE
+onMounted(fetchData);
 </script>
 
 <template>
