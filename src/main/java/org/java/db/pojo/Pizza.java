@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -56,19 +57,21 @@ public class Pizza {
 	// RELAZIONE MANY TO MANY CON GLI INGREDIENT
 
 	@ManyToMany
+	@JsonProperty
 	private List<Ingredient> ingredients;
 
 	public List<Ingredient> getIngredients() {
 		return ingredients;
 	}
 
+	@JsonIgnore
 	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
 
 	// METODO CHE RICEVE UNA LISTA DI INFREDIENTI TRAMITE LO SPRED OPERATOR E LO
 	// STRASFORMA IN UN ARRAY
-	@JsonIgnore
+
 	public void setIngredients(Ingredient... ingredients) {
 		setIngredients(Arrays.asList(ingredients));
 	}

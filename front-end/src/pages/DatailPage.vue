@@ -16,6 +16,8 @@ const fetchData = async () => {
 
     const data = await axios.get(`http://127.0.0.1:8080/api/v1.0/pizzas/${pizzaId}`);
     pizza.value = data.data;
+
+    console.log(pizza.value)
 }
 
 //AL MOUNT CHIAMO LA FUNZIONE
